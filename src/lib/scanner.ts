@@ -63,9 +63,11 @@ export async function scanApprovals(
   onProgress?.('Fetching latest block...');
 
   const latestBlock = await client.getBlockNumber();
-  const fromBlock = latestBlock > 1_000_000n ? latestBlock - 1_000_000n : BigInt(0);
+  // 200K blocks (~3 days on ETH, ~1 day on L2s) — works on free public RPCs (no archive needed)
+  const SCAN_RANGE = 200_000n;
+  const fromBlock = latestBlock > SCAN_RANGE ? latestBlock - SCAN_RANGE : BigInt(0);
 
-  onProgress?.(`Scanning blocks ${fromBlock} → ${latestBlock}...`);
+  onProgress?.(`Scanning last ${SCAN_RANGE} blocks (${fromBlock} → ${latestBlock})...`);
 
   // Fetch Approval events for this wallet
   const approvalLogs = await client.getLogs({
