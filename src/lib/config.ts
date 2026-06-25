@@ -35,23 +35,24 @@ export const CHAIN_COLORS: Record<number, string> = {
   8453: '#0052FF',
 };
 
+// Fast free RPCs — PublicNode + Cloudflare fallback
 export const CHAIN_RPC: Record<number, string> = {
-  1: 'https://eth.llamarpc.com',
-  56: 'https://bsc.llamarpc.com',
-  137: 'https://polygon.llamarpc.com',
-  42161: 'https://arbitrum.llamarpc.com',
-  10: 'https://optimism.llamarpc.com',
-  8453: 'https://base.llamarpc.com',
+  1: 'https://ethereum-rpc.publicnode.com',
+  56: 'https://bsc-rpc.publicnode.com',
+  137: 'https://polygon-bor-rpc.publicnode.com',
+  42161: 'https://arbitrum-one-rpc.publicnode.com',
+  10: 'https://optimism-rpc.publicnode.com',
+  8453: 'https://base-rpc.publicnode.com',
 };
 
 export const wagmiConfig = createConfig({
   chains: SUPPORTED_CHAINS,
   transports: {
-    [mainnet.id]: http(CHAIN_RPC[1]),
-    [bsc.id]: http(CHAIN_RPC[56]),
-    [polygon.id]: http(CHAIN_RPC[137]),
-    [arbitrum.id]: http(CHAIN_RPC[42161]),
-    [optimism.id]: http(CHAIN_RPC[10]),
-    [base.id]: http(CHAIN_RPC[8453]),
+    [mainnet.id]: http(CHAIN_RPC[1], { timeout: 15000 }),
+    [bsc.id]: http(CHAIN_RPC[56], { timeout: 15000 }),
+    [polygon.id]: http(CHAIN_RPC[137], { timeout: 15000 }),
+    [arbitrum.id]: http(CHAIN_RPC[42161], { timeout: 15000 }),
+    [optimism.id]: http(CHAIN_RPC[10], { timeout: 15000 }),
+    [base.id]: http(CHAIN_RPC[8453], { timeout: 15000 }),
   },
 });

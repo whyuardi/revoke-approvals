@@ -22,13 +22,14 @@ export interface Approval {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+// Fast free RPCs — PublicNode
 const CHAIN_CLIENTS: Record<number, PublicClient> = {
-  1: createPublicClient({ chain: mainnet, transport: http('https://eth.llamarpc.com') }),
-  56: createPublicClient({ chain: bsc, transport: http('https://bsc.llamarpc.com') }),
-  137: createPublicClient({ chain: polygon, transport: http('https://polygon.llamarpc.com') }),
-  42161: createPublicClient({ chain: arbitrum, transport: http('https://arbitrum.llamarpc.com') }),
-  10: createPublicClient({ chain: optimism, transport: http('https://optimism.llamarpc.com') }),
-  8453: createPublicClient({ chain: base, transport: http('https://base.llamarpc.com') }),
+  1: createPublicClient({ chain: mainnet, transport: http('https://ethereum-rpc.publicnode.com', { timeout: 15000 }) }),
+  56: createPublicClient({ chain: bsc, transport: http('https://bsc-rpc.publicnode.com', { timeout: 15000 }) }),
+  137: createPublicClient({ chain: polygon, transport: http('https://polygon-bor-rpc.publicnode.com', { timeout: 15000 }) }),
+  42161: createPublicClient({ chain: arbitrum, transport: http('https://arbitrum-one-rpc.publicnode.com', { timeout: 15000 }) }),
+  10: createPublicClient({ chain: optimism, transport: http('https://optimism-rpc.publicnode.com', { timeout: 15000 }) }),
+  8453: createPublicClient({ chain: base, transport: http('https://base-rpc.publicnode.com', { timeout: 15000 }) }),
 };
 
 const APPROVAL_EVENT = parseAbiItem(
