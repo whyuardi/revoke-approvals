@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Revoke Approvals 🔐
+
+Scan and revoke dangerous ERC-20 token approvals across 6 EVM chains. Protect your wallet from scam and phishing attacks.
+
+**Live Demo:** [revoke-approvals.vercel.app](https://revoke-approvals.vercel.app)
+
+## What it does
+
+Paste any wallet address → scan for active token approvals → see risk scores → revoke with one click.
+
+| Feature | Description |
+|---------|-------------|
+| 🔍 **Approval Scanner** | Scans ~1M blocks for Approval events, shows only active (non-zero) allowances |
+| ⚠️ **Risk Scoring** | Flags unlimited approvals, unknown spenders, and old/unused approvals |
+| 🔴 **One-Click Revoke** | Sends `approve(spender, 0)` to nullify the approval |
+| 🌐 **6 Chains** | Ethereum, BSC, Polygon, Arbitrum, Optimism, Base |
+| 📊 **Stats Dashboard** | Total approvals, critical risk count, high risk count |
+
+## Tech Stack
+
+| Layer | Tech |
+|-------|------|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript 5 |
+| UI | Tailwind CSS v4 |
+| Wallet | wagmi + viem |
+| Animation | Framer Motion |
+| Icons | Lucide React |
+| Font | Geist |
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+git clone https://github.com/whyuardi/revoke-approvals.git
+cd revoke-approvals
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How Risk Scoring Works
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Factor | Score Impact |
+|--------|-------------|
+| Unlimited approval (max uint256) | +50 |
+| Unknown spender contract | +30 |
+| Approval older than 365 days | +15 |
+| Approval older than 30 days | +5 |
+| Known legitimate spender | -10 |
 
-## Learn More
+**Risk Levels:** Critical (70+) → High (40+) → Medium (20+) → Low (0-19)
 
-To learn more about Next.js, take a look at the following resources:
+## Supported Chains
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Chain | RPC |
+|-------|-----|
+| Ethereum | eth.llamarpc.com |
+| BSC | bsc.llamarpc.com |
+| Polygon | polygon.llamarpc.com |
+| Arbitrum | arbitrum.llamarpc.com |
+| Optimism | optimism.llamarpc.com |
+| Base | base.llamarpc.com |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT © 2026 [Ardhiansyah Wahyu Setyadi](https://github.com/whyuardi)
