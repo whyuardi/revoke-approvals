@@ -1,21 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #050505;
-  --bg-secondary: #0A0A0A;
-  --bg-card: #0F0F0F;
-  --bg-card-hover: #141414;
-  --border: rgba(255, 255, 255, 0.06);
-  --border-hover: rgba(255, 255, 255, 0.12);
-  --accent: #F59E0B;
-  --accent-glow: rgba(245, 158, 11, 0.15);
-  --accent-hover: #FBBF24;
-  --text-primary: #F8F7F2;
-  --text-secondary: rgba(248, 247, 242, 0.6);
-  --text-muted: rgba(248, 247, 242, 0.35);
-  --danger: #EF4444;
-  --warning: #F97316;
-  --success: #22C55E;
+  --bg: #F5F3EE;
+  --bg-alt: #EBE8E1;
+  --border: #1A1A1A;
+  --border-light: #D4D0C8;
+  --text: #1A1A1A;
+  --text-muted: #6B6560;
+  --accent: #FF3B00;
+  --accent-hover: #E63500;
+  --danger: #DC2626;
+  --danger-bg: #FEE2E2;
+  --warning: #D97706;
+  --warning-bg: #FEF3C7;
+  --success: #16A34A;
+  --success-bg: #DCFCE7;
+  --info: #2563EB;
+  --info-bg: #DBEAFE;
 }
 
 * {
@@ -27,29 +28,31 @@ html {
 }
 
 body {
-  background: var(--bg-primary);
-  color: var(--text-primary);
+  background: var(--bg);
+  color: var(--text);
   min-height: 100vh;
 }
 
-/* Grain texture overlay */
+/* Grid paper background */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 9999;
-  opacity: 0.015;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(26, 26, 26, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 26, 26, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-light); border: 1px solid var(--border); }
+::-webkit-scrollbar-thumb:hover { background: var(--border); }
 
-/* Focus ring */
+/* Focus ring - raw */
 *:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
@@ -58,5 +61,10 @@ body::before {
 /* Selection */
 ::selection {
   background: var(--accent);
-  color: #000;
+  color: white;
+}
+
+/* Mono font everywhere */
+.font-mono {
+  font-family: var(--font-mono), 'Courier New', monospace;
 }

@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { type Approval } from '@/lib/scanner';
 import ApprovalCard from './ApprovalCard';
-import { Filter, CheckCircle2, AlertTriangle, Shield, ArrowUpDown } from 'lucide-react';
 
 type FilterLevel = 'all' | 'critical' | 'high' | 'medium' | 'low';
 
@@ -37,44 +36,43 @@ export default function ApprovalList({
   return (
     <div className="space-y-4">
       {/* Filters */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="flex flex-wrap gap-1.5">
           {(['all', 'critical', 'high', 'medium', 'low'] as FilterLevel[]).map((level) => (
             <button
               key={level}
               onClick={() => setFilter(level)}
-              className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
+              className={`flex items-center gap-1 border px-3 py-1.5 text-[10px] font-bold tracking-wide uppercase transition-all ${
                 filter === level
-                  ? 'bg-white/10 text-white'
-                  : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white/60'
+                  ? 'border-black bg-black text-white'
+                  : 'border-[var(--border-light)] bg-white text-[var(--text-muted)] hover:border-black hover:bg-[var(--bg-alt)]'
               }`}
             >
-              {level === 'critical' && <AlertTriangle className="h-3 w-3" />}
-              {level === 'high' && <AlertTriangle className="h-3 w-3" />}
-              {level === 'medium' && <Shield className="h-3 w-3" />}
-              {level === 'low' && <CheckCircle2 className="h-3 w-3" />}
-              {level === 'all' ? 'All' : level.charAt(0).toUpperCase() + level.slice(1)}
-              <span className="text-white/30">({counts[level]})</span>
+              {level === 'critical' && <span className="text-[var(--danger)]">!</span>}
+              {level === 'high' && <span className="text-[var(--warning)]">!</span>}
+              {level === 'medium' && <span>—</span>}
+              {level === 'low' && <span>✓</span>}
+              {level === 'all' ? 'ALL' : level.toUpperCase()}
+              <span className="opacity-50">({counts[level]})</span>
             </button>
           ))}
         </div>
 
         <button
           onClick={() => setSortBy(sortBy === 'risk' ? 'amount' : 'risk')}
-          className="flex items-center gap-1.5 rounded-lg bg-white/5 px-3 py-1.5 text-xs text-white/40 hover:bg-white/10 hover:text-white/60 transition-colors"
+          className="border border-[var(--border-light)] bg-white px-3 py-1.5 text-[10px] font-bold tracking-wide uppercase text-[var(--text-muted)] hover:border-black hover:bg-[var(--bg-alt)] transition-colors"
         >
-          <ArrowUpDown className="h-3 w-3" />
-          {sortBy === 'risk' ? 'By Risk' : 'By Amount'}
+          ↕ {sortBy === 'risk' ? 'BY RISK' : 'BY AMOUNT'}
         </button>
       </div>
 
       {/* List */}
-      <div className="space-y-3">
+      <div className="space-y-2">
         {sorted.length === 0 ? (
-          <div className="rounded-xl border border-white/5 bg-white/[0.02] p-8 text-center">
-            <CheckCircle2 className="mx-auto mb-3 h-8 w-8 text-green-400" />
-            <p className="text-sm text-white/60">
-              {approvals.length === 0 ? 'No approvals found' : 'No approvals match this filter'}
+          <div className="border-2 border-black bg-white p-8 text-center">
+            <div className="text-2xl mb-2">✓</div>
+            <p className="text-sm font-bold uppercase tracking-wide">
+              {approvals.length === 0 ? 'NO APPROVALS FOUND' : 'NO MATCHES FOR THIS FILTER'}
             </p>
           </div>
         ) : (

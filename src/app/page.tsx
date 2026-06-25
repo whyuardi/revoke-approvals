@@ -2,72 +2,57 @@
 
 import Header from '@/components/Header';
 import Scanner from '@/components/Scanner';
-import { Shield, ExternalLink, Code2 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
-    <div className="min-h-screen relative">
-      {/* Subtle ambient glow */}
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-amber-500/[0.03] rounded-full blur-[120px] pointer-events-none" />
-      
+    <div className="min-h-screen relative z-10">
       <Header />
       
-      <main className="relative mx-auto max-w-2xl px-5 pt-24 pb-20">
-        {/* Hero */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8"
-        >
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/20 bg-amber-500/5 px-3 py-1 mb-4">
-            <div className="h-1 w-1 rounded-full bg-amber-400 animate-pulse" />
-            <span className="text-[10px] font-medium uppercase tracking-widest text-amber-400/80">Live on 6 chains</span>
+      <main className="mx-auto max-w-3xl px-6 pt-28 pb-24">
+        {/* Hero — raw brutalist */}
+        <div className={`mb-12 transition-all duration-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}>
+          <div className="inline-block border border-black px-3 py-1 mb-6 text-[10px] font-bold tracking-[0.2em] uppercase">
+            LIVE ON 6 CHAINS
           </div>
           
-          <h1 className="text-[32px] sm:text-[40px] font-bold leading-[1.1] tracking-tight">
-            Revoke dangerous
+          <h1 className="text-[36px] sm:text-[48px] font-bold leading-[1.05] tracking-tight uppercase">
+            REVOKE
             <br />
-            <span className="text-white/40">token approvals</span>
+            <span className="text-[20px] sm:text-[26px] font-normal text-[var(--text-muted)] tracking-normal normal-case">
+              dangerous token approvals
+            </span>
           </h1>
           
-          <p className="mt-3 text-[13px] leading-relaxed text-white/30 max-w-md">
+          <p className="mt-4 text-[13px] leading-relaxed text-[var(--text-muted)] max-w-md font-normal">
             Scan your wallet for ERC-20 approvals. See which contracts can drain your funds. 
             Revoke in one click.
           </p>
 
-          {/* Trust signals */}
-          <div className="mt-5 flex items-center gap-4 text-[11px] text-white/20">
-            <span className="flex items-center gap-1.5">
-              <Shield className="h-3 w-3" />
-              Non-custodial
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Code2 className="h-3 w-3" />
-              Open source
-            </span>
-            <span className="flex items-center gap-1.5">
-              No login required
-            </span>
+          {/* Trust signals — no icons, pure text */}
+          <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] font-medium tracking-wide uppercase text-[var(--text-muted)]">
+            <span>[NON-CUSTODIAL]</span>
+            <span>[OPEN SOURCE]</span>
+            <span>[NO LOGIN]</span>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Scanner */}
         <Scanner />
 
-        {/* Footer */}
-        <footer className="mt-16 border-t border-white/[0.04] pt-5">
-          <div className="flex items-center justify-between text-[11px] text-white/15">
-            <span>© 2026 revoke.eth</span>
+        {/* Footer — monospace, raw */}
+        <footer className="mt-20 border-t-2 border-black pt-5">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[11px] text-[var(--text-muted)]">
+            <span className="font-medium">© 2026 REVOKE.ETH</span>
             <a
               href="https://github.com/whyuardi/revoke-approvals"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 hover:text-white/30 transition-colors"
+              className="font-medium hover:text-black transition-colors border-b border-transparent hover:border-black"
             >
-              GitHub
-              <ExternalLink className="h-2.5 w-2.5" />
+              GITHUB →
             </a>
           </div>
         </footer>
